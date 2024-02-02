@@ -49,23 +49,6 @@ class MHGCN(nn.Module):
 
         return x
 
-    @torch.no_grad()
-    def feature_extract(self, x, H):
-        for i, layer in enumerate(self.layers):
-            if self.residual and i != 0:
-                x_res = x
-                x = F.relu(layer(x, H))
-                x += x_res
-            else:
-                x = F.relu(layer(x, H))
-
-            if i != len(self.layers) - 1:  # Apply dropout to all layers except the last one
-                x = F.dropout(x, self.dropout)
-            if i == len(self.layers) - 2:
-                return x
-        return x
-
-
 @register_model
 def dhgnn(**kwargs):
     return MHGCN(**kwargs)
