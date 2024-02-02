@@ -89,9 +89,6 @@ def main(args):
     logger.info('Creating data')
     features, labels, idx_train, idx_val, idx_test, H = get_data(args)
 
-    logger.info('Creating model')
-    create_fn = model_entrypoint(args.model)
-    logger.info('Model created')
     if args.using_attributes:
         num_hyperedge = H.shape[1]
     else:
@@ -111,6 +108,7 @@ def main(args):
 
 
     logger.info('Creating model')
+    create_fn = model_entrypoint(args.model)
     model = create_fn(in_ch=features.shape[1],
                       n_class=args.nb_class,
                       n_hid=args.nhid,
@@ -127,6 +125,7 @@ def main(args):
                       num_hyperedge=num_hyperedge,
                       scaler=args.scaler,
                       kmeans_k=args.kmeans_k)
+    logger.info('Model created')
 
     optimizer = create_optimizer(args, model)
     lr_schedule_values = cosine_scheduler(args.base_lr, args.final_lr, args.epochs,
