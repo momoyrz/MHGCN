@@ -25,6 +25,7 @@ def get_args_parser():
     parser.add_argument('--gpu_id', default='1', type=str)
 
     parser.add_argument('--features_path', default='', type=str)
+    parser.add_argument('--csv_dir', default='./datasets/all_data.csv', type=str)
     parser.add_argument('--attributes_H_path', default='', type=str)
     parser.add_argument('--using_attributes', default='True', type=str)
 
